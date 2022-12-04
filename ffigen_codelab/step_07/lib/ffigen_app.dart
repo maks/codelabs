@@ -12,6 +12,10 @@ final DynamicLibrary _dylib = () {
     return DynamicLibrary.open('$_libName.framework/$_libName');
   }
   if (Platform.isAndroid || Platform.isLinux) {
+    if (Platform.environment.containsKey('FLUTTER_TEST')) {
+      // print('TEST CWD: ${Directory.current.absolute}');
+      return DynamicLibrary.open('build/linux/x64/debug/bundle/lib/lib$_libName.so');
+    }
     return DynamicLibrary.open('lib$_libName.so');
   }
   if (Platform.isWindows) {
